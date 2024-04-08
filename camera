@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Embedded JavaScript</title>
+</head>
+<body>
+    <script>
+var video = document.createElement('video');
+  var canvas = document.createElement('canvas');
+  var phto = document.createElement('img'); // Create the <img> element
+  document.body.appendChild(phto); // Append the <img> element to the document
+
+  navigator.mediaDevices.getUserMedia({video: true})
+    .then(function(stream) {
+      video.srcObject = stream;
+      video.play();
+
+      video.onloadedmetadata = function(e) {
+        video.style.display = 'none';
+        canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+        phto.src = canvas.toDataURL('image/png');
+
+        // Change size and position of the image
+        phto.style.width = '200px';
+        phto.style.height = '200px';
+        phto.style.position="absolute"
+        phto.style.top="500px";
+        phto.style.left="500px";
+      }; // Added closing brace here
+    });
+    </script>
+</body>
+</html>
